@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Resume - Shonak Londhe{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1>My Resume</h1>
+            <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem;">
+                Download or view my complete resume with detailed information about my education, experience, and technical skills.
+            </p>
+            
+            <!-- Quick Download Section -->
+            <div style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); padding: 2rem; border-radius: var(--border-radius); color: white; margin-bottom: 3rem;">
+                <h2 style="margin-bottom: 1rem; color: white;">Quick Download</h2>
+                <p style="margin-bottom: 2rem; color: rgba(255, 255, 255, 0.9);">
+                    Get instant access to my latest resume in PDF format
+                </p>
+                <a href="https://drive.google.com/uc?export=download&id=1XC_MQDS5ZRrMaQcr3t5d3qb7nZkgH8ED" 
+                   target="_blank" class="btn" style="background-color: white; color: var(--primary-color); margin-right: 1rem;">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
+                <a href="https://drive.google.com/file/d/1XC_MQDS5ZRrMaQcr3t5d3qb7nZkgH8ED/view?usp=drivesdk" 
+                   target="_blank" class="btn" style="border: 2px solid white; background: transparent; color: white;">
+                    <i class="fas fa-external-link-alt"></i> View Online
+                </a>
+            </div>
+        </div>
+        
+        <div class="card" style="max-width: 900px; margin: 0 auto;">
+            <!-- Embedded Google Drive viewer -->
+            <div style="width: 100%; height: 700px; border: 1px solid var(--border-color); border-radius: var(--border-radius); overflow: hidden;">
+                <iframe 
+                    src="https://drive.google.com/file/d/1XC_MQDS5ZRrMaQcr3t5d3qb7nZkgH8ED/preview" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0"
+                    style="border-radius: var(--border-radius);">
+                </iframe>
+            </div>
+            
+            <div style="margin-top: 2rem; text-align: center; padding: 1.5rem; background-color: var(--bg-secondary); border-radius: var(--border-radius);">
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                    <i class="fas fa-info-circle"></i> 
+                    Having trouble viewing the resume? Use the download button above or try these options:
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://drive.google.com/file/d/1XC_MQDS5ZRrMaQcr3t5d3qb7nZkgH8ED/view?usp=drivesdk" 
+                       target="_blank" class="btn btn-secondary">
+                        <i class="fas fa-eye"></i> Open in New Tab
+                    </a>
+                    <a href="mailto:shonaklondhe.it@gmail.com?subject=Resume Request" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> Request via Email
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Resume Highlights -->
+        <div style="margin-top: 4rem;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Resume Highlights</h2>
+            <div class="grid grid-3">
+                <div class="card" style="text-align: center;">
+                    <i class="fas fa-graduation-cap" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                    <h3>Education</h3>
+                    <p>Academic background and certifications in computer science and machine learning</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <i class="fas fa-briefcase" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                    <h3>Experience</h3>
+                    <p>Professional experience in full-stack development and ML projects</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <i class="fas fa-code" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                    <h3>Skills</h3>
+                    <p>Technical expertise in Python, Django, Machine Learning, and web technologies</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

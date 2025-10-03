@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog - Portfolio{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1>Blog Posts</h1>
+        <div class="grid grid-2">
+            {% for post in posts %}
+            <div class="card">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.excerpt }}</p>
+                <p><small>{{ post.created_at|date:"M d, Y" }} • {{ post.read_time }} min read</small></p>
+                <a href="{{ post.get_absolute_url }}" class="btn">Read More</a>
+            </div>
+            {% empty %}
+            <div class="card">
+                <h3>No blog posts yet</h3>
+                <p>Check back soon for interesting articles!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

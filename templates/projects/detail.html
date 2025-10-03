@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} - Portfolio{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h1>{{ project.title }}</h1>
+            
+            <div class="project-tags" style="margin: 1rem 0;">
+                {% for tag in project.tags.all %}
+                <span class="tag" style="background-color: {{ tag.color }}; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; margin-right: 0.5rem; font-size: 0.875rem;">
+                    {{ tag.name }}
+                </span>
+                {% endfor %}
+            </div>
+            
+            <div class="card" style="margin: 2rem 0;">
+                <div style="white-space: pre-line; line-height: 1.6;">{{ project.description|linebreaks }}</div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                {% if project.github_url %}
+                <a href="{{ project.github_url }}" target="_blank" class="btn" style="margin-right: 1rem;">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                {% endif %}
+                
+                {% if project.live_url %}
+                <a href="{{ project.live_url }}" target="_blank" class="btn btn-secondary">
+                    <i class="fas fa-external-link-alt"></i> Live Demo
+                </a>
+                {% endif %}
+                
+                <a href="{% url 'projects:list' %}" class="btn btn-secondary" style="margin-left: 1rem;">
+                    <i class="fas fa-arrow-left"></i> Back to Projects
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

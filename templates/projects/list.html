@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects - Portfolio{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1>My Projects</h1>
+        <p style="text-align: center; margin-bottom: 3rem; color: var(--text-secondary);">
+            Explore my machine learning and web development projects showcasing innovative solutions and technical expertise.
+        </p>
+        
+        <div class="grid grid-2" style="gap: 2rem;">
+            {% for project in projects %}
+            <div class="card project-card" style="height: 100%; display: flex; flex-direction: column;">
+                <div style="flex: 1;">
+                    <h3 style="margin-bottom: 1rem;">{{ project.title }}</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">{{ project.short_description }}</p>
+                    
+                    <div class="project-tags" style="margin-bottom: 1.5rem;">
+                        {% for tag in project.tags.all %}
+                        <span class="tag" style="background-color: {{ tag.color }}; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; margin-right: 0.5rem; margin-bottom: 0.5rem; font-size: 0.875rem; display: inline-block;">
+                            {{ tag.name }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-top: auto;">
+                    <a href="{{ project.get_absolute_url }}" class="btn" style="flex: 1; text-align: center;">
+                        <i class="fas fa-info-circle"></i> View Details
+                    </a>
+                    {% if project.github_url %}
+                    <a href="{{ project.github_url }}" target="_blank" class="btn btn-secondary" style="flex: 1; text-align: center;">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="card" style="text-align: center; grid-column: 1 / -1;">
+                <h3>No projects yet</h3>
+                <p>Projects will be added soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if projects %}
+        <div style="text-align: center; margin-top: 3rem;">
+            <p style="color: var(--text-secondary);">
+                <i class="fas fa-lightbulb"></i> 
+                More projects coming soon! Check back for updates on my latest work.
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

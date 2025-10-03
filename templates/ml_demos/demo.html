@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block title %}ML Demo - Portfolio{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1>Indian Real Estate Price Predictor</h1>
+        <p>Enter property details to get an estimated price for Indian real estate market using our machine learning model.</p>
+        
+        <div class="card" style="max-width: 700px; margin: 0 auto;">
+            <form id="ml-form">
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label for="bedrooms" class="form-label">Bedrooms</label>
+                        <input type="number" id="bedrooms" name="bedrooms" class="form-input" value="2" min="1" max="6" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="kitchen" class="form-label">Kitchen</label>
+                        <input type="number" id="kitchen" name="kitchen" class="form-input" value="1" min="1" max="3" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="hall" class="form-label">Hall/Living Room</label>
+                        <input type="number" id="hall" name="hall" class="form-input" value="1" min="1" max="4" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sqft" class="form-label">Area (Square Feet)</label>
+                        <input type="number" id="sqft" name="sqft" class="form-input" value="800" min="300" max="5000" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="city" class="form-label">City</label>
+                    <select id="city" name="city" class="form-input" required>
+                        <option value="pune">Pune</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="bangalore">Bangalore</option>
+                        <option value="hyderabad">Hyderabad</option>
+                        <option value="chennai">Chennai</option>
+                        <option value="kolkata">Kolkata</option>
+                        <option value="ahmedabad">Ahmedabad</option>
+                        <option value="other">Other City</option>
+                    </select>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="submit" class="btn" style="flex: 1;">
+                        <i class="fas fa-calculator"></i> Predict Property Price
+                    </button>
+                    <button type="button" id="reset-btn" class="btn btn-secondary" style="flex: 0 0 auto;">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </form>
+            
+            <div id="result" style="margin-top: 2rem; display: none;">
+                <h3 style="color: var(--primary-color);">
+                    <i class="fas fa-home"></i> Prediction Result
+                </h3>
+                <div id="prediction-details" style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--border-radius); margin-top: 1rem;">
+                    <p id="prediction-text" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;"></p>
+                    <div id="property-details"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 3rem; text-align: center;">
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                <i class="fas fa-info-circle"></i> 
+                This is a demo ML model for educational purposes. Actual property prices may vary significantly based on location, amenities, and market conditions.
+            </p>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('ml-form');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const resetBtn = document.getElementById('reset-btn');
+    const resultDiv = document.getElementById('result');
+    
+    const originalSubmitText = submitBtn.innerHTML;
+    
+    // Reset form function
+    function resetForm() {
+        // Reset form values to defaults
+        document.getElementById('bedrooms').value = '2';
+        document.getElementById('kitchen').value = '1';
+        document.getElementById('hall').value = '1';
+        document.getElementById('sqft').value = '800';
+        document.getElementById('city').value = 'pune';
+        
+        // Hide results
+        resultDiv.style.display = 'none';
+        
+        // Reset button state
+        submitBtn.innerHTML = originalSubmitText;
+        submitBtn.disabled = false;
+    }
+    
+    // Reset button click handler
+    resetBtn.addEventListener('click', resetForm);
+    
+    // Form submit handler
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Show loading state
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Calculating...';
+        submitBtn.disabled = true;
+        
+        const formData = {
+            bedrooms: document.getElementById('bedrooms').value,
+            kitchen: document.getElementById('kitchen').value,
+            hall: document.getElementById('hall').value,
+            sqft: document.getElementById('sqft').value,
+            city: document.getElementById('city').value
+        };
+        
+        try {
+            const response = await fetch('{% url "ml_demos:predict" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Show success result
+                document.getElementById('prediction-text').textContent = data.message;
+                
+                // Display detailed breakdown
+                const details = data.details;
+                document.getElementById('property-details').innerHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div><strong>City:</strong> ${details.city}</div>
+                        <div><strong>Bedrooms:</strong> ${details.bedrooms}</div>
+                        <div><strong>Kitchen:</strong> ${details.kitchen}</div>
+                        <div><strong>Hall:</strong> ${details.hall}</div>
+                        <div><strong>Area:</strong> ${details.sqft} sq ft</div>
+                        <div><strong>Price/sq ft:</strong> ₹${Math.round(details.price_per_sqft).toLocaleString('en-IN')}</div>
+                    </div>
+                `;
+                
+                resultDiv.style.display = 'block';
+                resultDiv.scrollIntoView({ behavior: 'smooth' });
+                
+            } else {
+                alert('Error: ' + (data.error || 'Prediction failed'));
+            }
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Network error. Please try again.');
+        }
+        
+        // Always reset button state
+        submitBtn.innerHTML = originalSubmitText;
+        submitBtn.disabled = false;
+    });
+});
+</script>
+{% endblock %}

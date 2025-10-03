@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - Blog{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1>{{ post.title }}</h1>
+        <p><small>{{ post.created_at|date:"M d, Y" }} • {{ post.read_time }} min read</small></p>
+        <div>{{ post.content|linebreaks }}</div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}About - Portfolio{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1>About Me</h1>
+        <p>Welcome to my portfolio! I'm a passionate developer with expertise in web development and machine learning.</p>
+        
+        <h2>Skills</h2>
+        <div class="grid grid-2">
+            {% regroup skills by category as skill_groups %}
+            {% for group in skill_groups %}
+            <div class="card">
+                <h3>{{ group.grouper|title }}</h3>
+                {% for skill in group.list %}
+                <p>{{ skill.name }} - {{ skill.proficiency }}%</p>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
