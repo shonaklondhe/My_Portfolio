@@ -149,7 +149,23 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = 'sent_emails'  # Folder where emails will be saved
 DEFAULT_FROM_EMAIL = 'shonaklondhe.it@gmail.com'
 
-# Alternative backends:
+# Production settings for PythonAnywhere
+import os
+
+# Update ALLOWED_HOSTS for production
+ALLOWED_HOSTS = ['shonak.pythonanywhere.com', 'localhost', '127.0.0.1', '*.pythonanywhere.com']
+
+# Whitenoise for static files serving
+if 'whitenoise.middleware.WhiteNoiseMiddleware' not in MIDDLEWARE:
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Ensure email file path exists
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+os.makedirs(EMAIL_FILE_PATH, exist_ok=True)
+
+# Alternative email backends:
 # For console output (testing):
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -159,4 +175,4 @@ DEFAULT_FROM_EMAIL = 'shonaklondhe.it@gmail.com'
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
 # EMAIL_HOST_USER = 'shonaklondhe.it@gmail.com'
-# EMAIL_HOST_PASSWORD = 'your_16_char_app_password'  # Not regular password!
+# EMAIL_HOST_PASSWORD = 'your_16_char_app_password'
