@@ -144,14 +144,19 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Email configuration
-# Using Gmail SMTP with Less Secure Apps (easiest method)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'shonaklondhe.it@gmail.com'
-EMAIL_HOST_PASSWORD = 'your_gmail_password_here'  # Replace with your actual Gmail password
+# Using file backend - saves emails to files (works without any setup!)
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'sent_emails'  # Folder where emails will be saved
 DEFAULT_FROM_EMAIL = 'shonaklondhe.it@gmail.com'
 
-# For testing only (shows emails in console):
+# Alternative backends:
+# For console output (testing):
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# For real Gmail sending (requires App Password):
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'shonaklondhe.it@gmail.com'
+# EMAIL_HOST_PASSWORD = 'your_16_char_app_password'  # Not regular password!
