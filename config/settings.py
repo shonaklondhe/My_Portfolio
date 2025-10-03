@@ -23,16 +23,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-_2b_6@23(hn2%o4t4^59x4)3m4mjpwi^r)6@bmjf9r0abx_eaw"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Set DEBUG = False for production deployment
+DEBUG = True  # Change to False when deploying
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+# Production allowed hosts
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'shonak.pythonanywhere.com', '*.pythonanywhere.com']
 
-# CSRF trusted origins for development
+# CSRF trusted origins for development and production
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://localhost:8000',
     'http://127.0.0.1:49306',  # Browser preview proxy
     'http://localhost:49306',
+    'https://shonak.pythonanywhere.com',  # Production URL
+    'http://shonak.pythonanywhere.com',
 ]
 
 
