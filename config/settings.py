@@ -144,14 +144,18 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Email configuration
-# Use SMTP backend for real email sending
+# Using Outlook/Office365 SMTP (easier than Gmail 2FA)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'shonaklondhe.it@gmail.com'
-EMAIL_HOST_PASSWORD = 'your_app_password_here'  # You need to set this with your Gmail app password
+EMAIL_HOST_USER = 'shonaklondhe.it@gmail.com'  # Your email address
+EMAIL_HOST_PASSWORD = 'your_email_password_here'  # Your regular email password
 DEFAULT_FROM_EMAIL = 'shonaklondhe.it@gmail.com'
+
+# Alternative: Gmail configuration (requires 2FA + App Password)
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_PASSWORD = 'your_gmail_app_password_here'
 
 # For development/testing, uncomment this line to see emails in console:
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
