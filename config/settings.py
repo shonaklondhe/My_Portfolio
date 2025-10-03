@@ -144,14 +144,14 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Email configuration
-# For development, use console backend to see emails in terminal
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-# For production, uncomment these lines and set EMAIL_HOST_PASSWORD
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'shonaklondhe.it@gmail.com'
-# EMAIL_HOST_PASSWORD = ''  # Set this with your Gmail app password
+# Use SMTP backend for real email sending
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'shonaklondhe.it@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_app_password_here'  # You need to set this with your Gmail app password
 DEFAULT_FROM_EMAIL = 'shonaklondhe.it@gmail.com'
+
+# For development/testing, uncomment this line to see emails in console:
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
